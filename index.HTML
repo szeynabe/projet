@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Calculatrice</title>
+<link rel="stylesheet" href="12-4.css">
+</head>
+<body>
+<!-- CALCULATRICE DE 12 4 + ET = -->
+<!-- <div class="calculator">
+    <textarea id="ecran" readonly></textarea>
+    <div class="buttons">
+    <button onclick="taper('12')">12</button>
+    <button onclick="taper('4')">4</button>
+    <button onclick="taper('+')">+</button>
+    <button onclick="calculer('=')">=</button>
+    </div>
+</div>
+
+<script>
+    function taper(texte) {
+    let ecran = document.getElementById("ecran")
+    ecran.value =ecran.value + texte
+    }
+    function calculer() {
+    let ecran = document.getElementById("ecran")
+    let resultat = eval(ecran.value)
+    ecran.value = resultat
+    }
+</script> -->
+
+
+
+<!-- CALCULATRICE DE 12 6 + = ET C -->
+<!-- <div id="container">
+    <input type="text" id="ecran">
+    <div class="bouttons">
+        <button class="bleu" onclick="taper('12')">12</button>
+        <button class="bleu" onclick="taper('6')">6</button>
+        <button class="bleu" onclick="taper('+')">+</button>
+        <button class="bleu" onclick="calculer('=')">=</button>
+        <button class="rouge" onclick="effacer('C')">C</button>
+    </div>
+</div>
+<script>
+    function taper(valeur) {
+        document.getElementById("ecran").value += valeur;
+    }
+    function calculer() {
+        try {
+            let resultat = eval(document.getElementById("ecran").value);
+            document.getElementById("ecran").value = resultat;
+        } 
+        catch (e) {
+            document.getElementById("ecran").value = "Erreur";
+        }
+    }
+    function effacer() {
+        document.getElementById("ecran").value = "";
+    }
+</script>  -->
+
+<!-- JEU DE MOTS  -->
+    <h1>Jeu de mots</h1>
+    <div class="container">
+        <button id="demarrer">🎮 Démarrer le jeu</button>
+        <div id="mot"></div>
+        <input type="text" id="saisie" placeholder="Tapez le mot ici" autocomplete="off" disabled>
+        <div id="timer">⏱️ Temps : 5s</div>
+        <div id="score">Score : 0 / 0</div>
+    </div>
+    <!-- Audios -->
+    <audio id="son-bravo" src="bravo.mp3" preload="auto"></audio>
+    <audio id="son-desole" src="desole.mp3" preload="auto"></audio>
+
+    <script>
+        const listeMots = ["banane", "voiture", "éléphant", "ordinateur", "soleil", "chocolat"];
+        let score = 0;
+        let indexMot = 0;
+        let tempsRestant = 5;
+        let timer;
+
+        const motAffiche = document.getElementById("mot");
+        const saisie = document.getElementById("saisie");
+        const timerDiv = document.getElementById("timer");
+        const scoreDiv = document.getElementById("score");
+        const sonBravo = document.getElementById("son-bravo");
+        const sonDesole = document.getElementById("son-desole");
+        const boutonDemarrer = document.getElementById("demarrer");
+
+        boutonDemarrer.addEventListener("click", () => {
+            boutonDemarrer.style.display = "none";
+            saisie.disabled = false;
+            saisie.focus();
+            afficherMot();
+        });
+
+        function afficherMot() {
+            if (indexMot >= listeMots.length) {
+                clearInterval(timer);
+                saisie.disabled = true;
+
+            if (score >= 4) {
+                motAffiche.textContent = "🎉 Bravo ! Tu as réussi !";
+                sonBravo.play();
+            }
+            else {
+                motAffiche.textContent = "😢 Désolé, tu as perdu.";
+                sonDesole.play();
+            }
+
+            scoreDiv.textContent = `Score : ${score} / ${listeMots.length}`;
+            return;
+        }
+
+        motAffiche.textContent = listeMots[indexMot];
+        saisie.value = "";
+        tempsRestant = 5;
+        timerDiv.textContent = `⏱️ Temps : ${tempsRestant}`;
+        clearInterval(timer);
+        timer = setInterval(decompte, 1000);
+        }
+
+        function decompte() {
+            tempsRestant--;
+            timerDiv.textContent = `⏱️ Temps : ${tempsRestant}`;
+        if (tempsRestant <= 0) {
+            verifierMot();
+        }
+        }
+
+        function verifierMot() {
+            clearInterval(timer);
+        if (saisie.value.trim().toLowerCase() === listeMots[indexMot]) {
+            score++;
+        }
+        scoreDiv.textContent = `Score : ${score} / ${listeMots.length}`;
+        indexMot++;
+        afficherMot();
+        }
+
+        saisie.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            verifierMot();
+        }
+        });
+    </script>
+</body>
+</html>
